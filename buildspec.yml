@@ -4,6 +4,8 @@ phases:
   install:
     commands:
       - pip install yamllint
+      - pip install awscli
   build:
     commands:
-      - yamllint *.yml
+      - ls
+      - /usr/local/bin/yamllint *.yml
