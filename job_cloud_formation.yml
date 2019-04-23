@@ -1,0 +1,23 @@
+Resources:
+  CodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: CloudFormation-CI-CD
+      Artifacts:
+        Type: NO_ARTIFACTS
+      ServiceRole: arn:aws:iam::111111111111:role/service-role/codebuild-cbtest-service-role
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/python:3.6.5-1.6.0
+      Source:
+        Type: GITHUB
+        Location: https://github.com/lcc2207/cbcloudformation.git
+      TimeoutInMinutes: 15
+      LogsConfig:
+        CloudWatchLogs:
+          Status: ENABLED
+          GroupName: codebuild
+          StreamName: codebuild
+      Triggers:
+        Webhook: true
