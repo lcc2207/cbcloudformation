@@ -1,13 +1,18 @@
 version: 0.2
 
+env:
+  variables:
+    YAMLFILE: "job_cloud_formation.yml"
+
 phases:
   install:
     commands:
-      - pip install yamllint
-      - pip install awscli
-      - pip install taskcat
-      - pip install cfn-lint
+      - pip install yamllint awscli taskcat cfn-lint
+      - apt-add-repository ppa:brightbox/ruby-ng
+      - apt update; apt install ruby2.2 -y
+      - gem install cfn-nag --no-ri --no-rdoc
   build:
     commands:
-      - cfn-lint job_cloud_formation.yml
-      - /usr/local/bin/yamllint job_cloud_formation.yml
+      - yamllint $YAMLFILE
+      - cfn-lint $YAMLFILE
+      - cfn_nag $YAMLFILE
