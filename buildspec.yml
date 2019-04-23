@@ -6,7 +6,8 @@ phases:
       - pip install yamllint
       - pip install awscli
       - pip install taskcat
+      - pip install cfn-lint
   build:
     commands:
-      - ls
+      - cfn-lint job_cloud_formation.yml
       - /usr/local/bin/yamllint job_cloud_formation.yml
